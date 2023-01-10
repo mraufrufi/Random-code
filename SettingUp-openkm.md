@@ -86,6 +86,10 @@ default-storage-engine = innodb
 ## Installing OpenKM & Tomcat Bundle.
 Download openkms installer form: ``https://www.openkm.com/en/download.html`` 
 Copy where you want to install.
+create new user
+```
+sudo useradd openkm
+```
 ### Installation: 
 
 ```
