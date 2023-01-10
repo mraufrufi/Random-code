@@ -1,5 +1,5 @@
 
-# Settingup Openkm on Oracle Linux
+# Setting up Openkm on Oracle Linux
 ## Installation java :
 
 Check the java version using the following command if you already have installed java: 
