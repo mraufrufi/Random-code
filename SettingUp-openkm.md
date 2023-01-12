@@ -16,8 +16,11 @@ if multiple instances of java are installed kindly set java 8 as your default ja
 alternatives --config java 
 ```
 ## Installing and setup Database
+create new Linux user
+```
+sudo useradd openkm
+```
 ### installation
-
 ```
 #Download MySQL 
 wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm 
@@ -86,7 +89,7 @@ default-storage-engine = innodb
 ## Installing OpenKM & Tomcat Bundle.
 Download openkms installer form: ``https://www.openkm.com/en/download.html`` 
 Copy where you want to install.
-create new user
+create new Linux user
 ```
 sudo useradd openkm
 ```
