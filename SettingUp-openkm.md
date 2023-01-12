@@ -18,7 +18,7 @@ alternatives --config java
 ## Installing and setup Database
 create new Linux user
 ```
-sudo useradd openkm
+sudo useradd mysql
 ```
 ### installation
 ```
