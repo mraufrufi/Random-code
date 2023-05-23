@@ -1,7 +1,7 @@
-# MySQL  root password reset
+## MySQL  root password reset
 Stop MySQL Server
 
-systemctl stop mysqld
+'systemctl stop mysqld'
 
 systemctl stop mysqld
 Set the MySQL MYSQLD_OPTS environment to start MySQL with –skip-grant-tables
