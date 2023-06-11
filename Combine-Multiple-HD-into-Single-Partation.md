@@ -1,4 +1,4 @@
-##Let's find out about our hard disks:
+### Let's find out about our hard disks:
 
 ```fdisk -l```
 
