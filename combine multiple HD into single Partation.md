@@ -1,9 +1,9 @@
-Let's find out about our hard disks:
+##Let's find out about our hard disks:
 
-fdisk -l
+```fdisk -l```
 
 The output looks like this:
-
+```
 server1:~# fdisk -l
  
  Disk /dev/sda: 21.4 GB, 21474836480 bytes
@@ -44,10 +44,12 @@ server1:~# fdisk -l
  Units = cylinders of 16065 * 512 = 8225280 bytes
  
  Disk /dev/sdf doesn't contain a valid partition table
- 
- There are no partitions yet on /dev/sdb - /dev/sdf. We will create the partitions /dev/sdb1, /dev/sdc1, /dev/sdd1, and /dev/sde1 and leave /dev/sdf untouched for now. We act as if our hard disks had only 25GB of space instead of 80GB for now, therefore we assign 25GB to /dev/sdb1, /dev/sdc1, /dev/sdd1, and /dev/sde1:
+ ```
+There are no partitions yet on /dev/sdb - /dev/sdf. We will create the partitions /dev/sdb1, /dev/sdc1, /dev/sdd1
 
-fdisk /dev/sdb
+```
+
+
 server1:~# fdisk /dev/sdb
 
 The number of cylinders for this disk is set to 10443.
@@ -122,24 +124,32 @@ The partition table has been altered!
 
 Calling ioctl() to re-read partition table.
 Syncing disks.
+```
 
 Now we do the same for the hard disks /dev/sdc - /dev/sde:
 
+```
 fdisk /dev/sdc
  fdisk /dev/sdd
  fdisk /dev/sde
-Then run
-
-fdisk -l
-again. The output should look like this:
-
-server1:~# fdisk -l
+ ```
+ Then run
+ 
+ ```
+ fdisk -l
+ ```
+ 
+ again. The output should look like this: Partations are created
+ 
+ 
+ ```
+ server1:~# fdisk -l
  
  Disk /dev/sda: 21.4 GB, 21474836480 bytes
  255 heads, 63 sectors/track, 2610 cylinders
  Units = cylinders of 16065 * 512 = 8225280 bytes
  
-    Device Boot      Start         End      Blocks   Id  System
+ Device Boot      Start         End      Blocks   Id  System
  /dev/sda1   *           1          18      144553+  83  Linux
  /dev/sda2              19        2450    19535040   83  Linux
  /dev/sda4            2451        2610     1285200   82  Linux swap / Solaris
@@ -147,29 +157,28 @@ server1:~# fdisk -l
  Disk /dev/sdb: 85.8 GB, 85899345920 bytes
  255 heads, 63 sectors/track, 10443 cylinders
  Units = cylinders of 16065 * 512 = 8225280 bytes
- 
-    Device Boot      Start         End      Blocks   Id  System
- /dev/sdb1               1        3040    24418768+  8e  Linux LVM
+
+  Device Boot      Start         End      Blocks   Id  System
+  /dev/sdb1               1        3040    24418768+  8e  Linux LVM
  
  Disk /dev/sdc: 85.8 GB, 85899345920 bytes
  255 heads, 63 sectors/track, 10443 cylinders
  Units = cylinders of 16065 * 512 = 8225280 bytes
  
-    Device Boot      Start         End      Blocks   Id  System
+ Device Boot      Start         End      Blocks   Id  System
  /dev/sdc1               1        3040    24418768+  8e  Linux LVM
  
  Disk /dev/sdd: 85.8 GB, 85899345920 bytes
  255 heads, 63 sectors/track, 10443 cylinders
  Units = cylinders of 16065 * 512 = 8225280 bytes
  
-    Device Boot      Start         End      Blocks   Id  System
+  Device Boot      Start         End      Blocks   Id  System
  /dev/sdd1               1        3040    24418768+  8e  Linux LVM
  
  Disk /dev/sde: 85.8 GB, 85899345920 bytes
  255 heads, 63 sectors/track, 10443 cylinders
  Units = cylinders of 16065 * 512 = 8225280 bytes
- 
-    Device Boot      Start         End      Blocks   Id  System
+ Device Boot      Start         End      Blocks   Id  System
  /dev/sde1               1        3040    24418768+  8e  Linux LVM
  
  Disk /dev/sdf: 85.8 GB, 85899345920 bytes
@@ -177,38 +186,26 @@ server1:~# fdisk -l
  Units = cylinders of 16065 * 512 = 8225280 bytes
  
  Disk /dev/sdf doesn't contain a valid partition table
-Now we prepare our new partitions for LVM:
-
-pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
-server1:~# pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
+ ```
+ Now we prepare our new partitions for LVM:
+ 
+ ```
+ pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
+ ```
+ ```
+ server1:~# pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
    Physical volume "/dev/sdb1" successfully created
    Physical volume "/dev/sdc1" successfully created
    Physical volume "/dev/sdd1" successfully created
    Physical volume "/dev/sde1" successfully created
-Let's revert this last action for training purposes:
-
-pvremove /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
-server1:~# pvremove /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
-   Labels on physical volume "/dev/sdb1" successfully wiped
-   Labels on physical volume "/dev/sdc1" successfully wiped
-   Labels on physical volume "/dev/sdd1" successfully wiped
-   Labels on physical volume "/dev/sde1" successfully wiped
-Then run
-
-pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
-again:
-
-server1:~# pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
-   Physical volume "/dev/sdb1" successfully created
-   Physical volume "/dev/sdc1" successfully created
-   Physical volume "/dev/sdd1" successfully created
-   Physical volume "/dev/sde1" successfully created
-Now run
-
-pvdisplay
-to learn about the current state of your physical volumes:
-
-server1:~# pvdisplay
+   ```
+   Now run
+   ```
+   pvdisplay
+   ```
+   to learn about the current state of your physical volumes:
+   ```
+   server1:~# pvdisplay
    --- NEW Physical volume ---
    PV Name               /dev/sdb1
    VG Name
@@ -252,3 +249,169 @@ server1:~# pvdisplay
    Free PE               0
    Allocated PE          0
    PV UUID               3upcZc-4eS2-h4r4-iBKK-gZJv-AYt3-EKdRK6
+   ```
+   Now let's create our volume group fileserver and add /dev/sdb1 - /dev/sde1 to it:
+   ```
+   vgcreate fileserver /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
+   ```
+   ```
+   server1:~# vgcreate fileserver /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
+   Volume group "fileserver" successfully created
+   ```
+   Let's learn about our volume groups:
+   
+   ```
+   vgdisplay
+   ```
+   ```
+   server1:~# vgdisplay
+   --- Volume group ---
+   VG Name               fileserver
+   System ID
+   Format                lvm2
+   Metadata Areas        4
+   Metadata Sequence No  1
+   VG Access             read/write
+   VG Status             resizable
+   MAX LV                0
+   Cur LV                0
+   Open LV               0
+   Max PV                0
+   Cur PV                4
+   Act PV                4
+   VG Size               93.14 GB
+   PE Size               4.00 MB
+   Total PE              23844
+   Alloc PE / Size       0 / 0
+   Free  PE / Size       23844 / 93.14 GB
+   VG UUID               3Y1WVF-BLET-QkKs-Qnrs-SZxI-wrNO-dTqhFP
+   ```
+   
+   Another command to learn about our volume groups:
+   ```
+   vgscan
+   ```
+   ```
+   server1:~# vgscan
+   Reading all physical volumes.  This may take a while...
+   Found volume group "fileserver" using metadata type lvm2
+   ```
+   For training purposes let's rename our volumegroup fileserver into data:
+   ```
+   vgrename fileserver data
+   ```
+   ```
+   server1:~# vgrename fileserver data
+   Volume group "fileserver" successfully renamed to "data"
+   ```
+   
+   Next we create our logical volumes share (40GB), backup (5GB), and media (1GB) in the volume group fileserver. Together they use a little less than 50% of the available space (that way we can make use of RAID1 later on):
+   
+   ```
+  lvcreate --name share --size 40G fileserver
+  ```
+  ```
+server1:~# lvcreate --name share  --size 40G fileserver
+   Logical volume "share" created
+ ```
+ ```
+lvcreate --name backup --size 5G fileserver
+```
+```
+server1:~# lvcreate --name backup --size  5G fileserver
+   Logical volume "backup" created
+ ```
+ ```
+lvcreate --name media --size 1G fileserver
+```
+```
+server1:~# lvcreate --name media  --size  1G fileserver
+   Logical volume "media" created
+   ```
+   Let's get an overview of our logical volumes:
+```
+lvdisplay
+```
+```
+server1:~# lvdisplay
+   --- Logical volume ---
+   LV Name                /dev/fileserver/share
+   VG Name                fileserver
+   LV UUID                280Mup-H9aa-sn0S-AXH3-04cP-V6p9-lfoGgJ
+   LV Write Access        read/write
+   LV Status              available
+   # open                 0
+   LV Size                40.00 GB
+   Current LE             10240
+   Segments               2
+   Allocation             inherit
+   Read ahead sectors     0
+   Block device           253:0
+ 
+   --- Logical volume ---
+   LV Name                /dev/fileserver/backup
+   VG Name                fileserver
+   LV UUID                zZeuKg-Dazh-aZMC-Aa99-KUSt-J6ET-KRe0cD
+   LV Write Access        read/write
+   LV Status              available
+   # open                 0
+   LV Size                5.00 GB
+   Current LE             1280
+   Segments               1
+   Allocation             inherit
+   Read ahead sectors     0
+   Block device           253:1
+ 
+   --- Logical volume ---
+   LV Name                /dev/fileserver/media
+   VG Name                fileserver
+   LV UUID                usfvrv-BC92-3pFH-2NW0-2N3e-6ERQ-4Sj7YS
+   LV Write Access        read/write
+   LV Status              available
+   # open                 0
+   LV Size                1.00 GB
+   Current LE             256
+   Segments               1
+   Allocation             inherit
+   Read ahead sectors     0
+   Block device           253:2
+   ```
+   
+   Until now we have three logical volumes, but we don't have any filesystems in them, and without a filesystem we can't save anything in them. Therefore we create an ext3 filesystem in share, an xfs filesystem in backup, and a reiserfs filesystem in media:
+   
+   ```
+   mkfs.ext3 /dev/fileserver/share
+   ```
+   ```
+   server1:~# mkfs.ext3 /dev/fileserver/share
+ mke2fs 1.40-WIP (14-Nov-2006)
+ Filesystem label=
+ OS type: Linux
+ Block size=4096 (log=2)
+ Fragment size=4096 (log=2)
+ 5242880 inodes, 10485760 blocks
+ 524288 blocks (5.00%) reserved for the super user
+ First data block=0
+ Maximum filesystem blocks=0
+ 320 block groups
+ 32768 blocks per group, 32768 fragments per group
+ 16384 inodes per group
+ Superblock backups stored on blocks:
+         32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+         4096000, 7962624
+ 
+ Writing inode tables: done
+ Creating journal (32768 blocks): done
+ Writing superblocks and filesystem accounting information: done
+ 
+ This filesystem will be automatically checked every 23 mounts or
+ 180 days, whichever comes first.  Use tune2fs -c or -i to override.
+ ```
+Repeate the above instruction for all new partations
+
+Now we are ready to mount our logical volumes. I want to mount share in /var/share, backup in /var/backup, and media in /var/media, therefore we must create these directories first:
+
+```
+mkdir /var/media /var/backup /var/share
+```
+You can automount this 
