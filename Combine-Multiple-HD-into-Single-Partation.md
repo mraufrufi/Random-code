@@ -414,4 +414,17 @@ Now we are ready to mount our logical volumes. I want to mount share in /var/sha
 ```
 mkdir /var/media /var/backup /var/share
 ```
-You can automount this 
+automount 
+``` 
+nano /etc/fstab
+```
+add the following lines at the end of file
+```
+ dev/fileserver/share   /var/share     ext3       default   1 1
+/dev/fileserver/backup    /var/backup      xfs        default   1 1
+/dev/fileserver/media    /var/media      reiserfs   defalult    1 1
+```
+```
+shutdown -r now
+
+```
