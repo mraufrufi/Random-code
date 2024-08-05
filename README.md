@@ -7,3 +7,4 @@ Each File describe a specific job Please follow the instruction in the file
 * [Setting up Openkms](https://github.com/mraufrufi/Random-code/blob/main/SettingUp-openkm.md)
 * [Combining multiple hard disks into one partition ](https://github.com/mraufrufi/Random-code/blob/main/Combine-Multiple-HD-into-Single-Partation.md)
 * [Shareing folder between Linux machines using NFS ](https://github.com/mraufrufi/Random-code/blob/main/Permanent-Mounting-Linux-Remote-folder.md)
+* [dpkg: warning: files list file for package `*****' missing, assuming package has no files currently installed ](https://github.com/mraufrufi/Random-code/blob/main/fix.sh)
